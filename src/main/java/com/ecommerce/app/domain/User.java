@@ -1,40 +1,39 @@
 package com.ecommerce.app.domain;
 
-import com.ecommerce.app.domain.Address;
-import com.ecommerce.app.domain.Review;
-import lombok.*;
+import java.util.*;
 
+import lombok.Setter;
+import lombok.Getter;
 import javax.persistence.*;
-import java.util.Set;
+import java.io.Serializable;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private String name;
-
+    private String vendor;
     @Column(unique = true)
     private String phone;
+    @Column(unique = true)
+    private String email;
+    private String password;
+    private String username;
+    private  boolean isAccountNonLocked;
+    private  boolean isEnabled;
+    private  boolean isCredentialsNonExpired;
+    private  boolean isAccountNonExpired;
+    private String userRole;
 
     @OneToMany()
-    @JoinTable(
-            name = "user_address",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id")
-    )
-    private Set<Address> address;
-
+    private Set<Product> products;
     @OneToMany()
     private Set<Review> reviews;
+    @OneToMany()
+    private Set<Address> address;
 
-    public User(String name, String phone) {
-        this.name = name;
-        this.phone = phone;
-    }
 }
