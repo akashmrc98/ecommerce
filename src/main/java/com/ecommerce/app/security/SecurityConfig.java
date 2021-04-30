@@ -1,22 +1,21 @@
 package com.ecommerce.app.security;
 
-import com.ecommerce.app.authentication.AuthUserService;
-import com.ecommerce.app.authentication.filters.JwtAuthenticationFilter;
-import com.ecommerce.app.jwt.JwtConfig;
-import com.ecommerce.app.authentication.filters.JwtTokenVerifier;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ecommerce.app.jwt.JwtTokenGenerator;
+import com.ecommerce.app.jwt.JwtTokenVerifier;
 import org.springframework.context.annotation.Bean;
+import com.ecommerce.app.authentication.AuthUserService;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.ecommerce.app.authentication.filters.JwtTokenFilter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import com.ecommerce.app.authentication.filters.JwtAuthenticationFilter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.crypto.SecretKey;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 @Configuration
 @EnableWebSecurity
@@ -25,20 +24,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthUserService authUserService;
     private final PasswordEncoder passwordEncoder;
-    private final SecretKey secretKey;
-    private final JwtConfig jwtConfig;
+    private final JwtTokenGenerator jwtTokenGenerator;
+    private final JwtTokenVerifier jwtTokenVerifier;
 
     @Autowired
     public SecurityConfig(
     PasswordEncoder passwordEncoder,
     AuthUserService authUserService,
-    SecretKey secretKey,
-    JwtConfig jwtConfig
+    JwtTokenGenerator jwtTokenGenerator,
+    JwtTokenVerifier jwtTokenVerifier
     ) {
         this.authUserService = authUserService;
         this.passwordEncoder = passwordEncoder;
-        this.secretKey = secretKey;
-        this.jwtConfig = jwtConfig;
+        this.jwtTokenGenerator = jwtTokenGenerator;
+        this.jwtTokenVerifier = jwtTokenVerifier;
     }
 
     @Override
@@ -48,13 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .csrf().disable()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
-        .addFilter(new JwtAuthenticationFilter(authenticationManager(),  secretKey, jwtConfig))
-        .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtAuthenticationFilter.class)
+        .addFilter(new JwtAuthenticationFilter(authenticationManager(),  jwtTokenGenerator))
+        .addFilterAfter(new JwtTokenFilter(jwtTokenVerifier), JwtAuthenticationFilter.class)
         .authorizeRequests()
         .anyRequest()
         .authenticated();
     }
-
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){

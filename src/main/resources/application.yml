@@ -1,4 +1,12 @@
 spring:
+  application.jwt:
+    accessSecretKey: "Secure@MSI@Secure@MSI@Secure@MSI@Secure@MSI@Secure@MSI@Secure@MSI@Secure@MSI@"
+    accessTokenPrefix: "Bearer "
+    accessTokenExpirationInHours: 1
+
+    refreshSecretKey: "Secure@AntecSecure@AntecSecure@AntecSecure@AntecSecure@AntecSecure@AntecSecure@Antec"
+    refreshTokenPrefix: "Refresher "
+    refreshTokenExpirationInDays: 2
 
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver

@@ -1,42 +1,35 @@
 package com.ecommerce.app.authentication.filters;
 
-import com.ecommerce.app.authentication.AuthRequest;
-import com.ecommerce.app.jwt.JwtConfig;
+import java.io.IOException;
+import java.io.PrintWriter;
 import lombok.SneakyThrows;
-import io.jsonwebtoken.Jwts;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.util.Date;
+import com.ecommerce.app.jwt.JwtTokenGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ecommerce.app.authentication.AuthRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final AuthenticationManager authenticationManager;
-	private final SecretKey secretKey;
-	private final JwtConfig jwtConfig;
+	private final JwtTokenGenerator jwtTokenGenerator;
 
 	@Autowired
 	public JwtAuthenticationFilter(
 		AuthenticationManager authenticationManager,
-		SecretKey secretKey,
-		JwtConfig jwtConfig
+		JwtTokenGenerator jwtTokenGenerator
 	) {
 		this.authenticationManager = authenticationManager;
-		this.secretKey = secretKey;
-		this.jwtConfig = jwtConfig;
+		this.jwtTokenGenerator = jwtTokenGenerator;
 	}
 
 	@SneakyThrows
@@ -49,20 +42,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-		String token = Jwts.builder()
-					.setSubject(authResult.getName())
-					.claim("authorities", authResult.getAuthorities())
-					.setIssuedAt(new Date())
-					.setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationInHours())))
-					.signWith(secretKey)
-					.compact();
+		PrintWriter tokenAsResponse = response.getWriter();
 
+		String accessToken = jwtTokenGenerator.generateAccessToken(authResult.getName(), authResult.getDetails());
+		String refreshToken = jwtTokenGenerator.generateRefreshToken(authResult.getName(), authResult.getAuthorities());
+		String tokens = jwtTokenGenerator.objectMapAccessAndRefreshTokens(accessToken, refreshToken);
 
-		ObjectMapper mapper = new ObjectMapper();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		PrintWriter tokenAsResponse = response.getWriter();
-		tokenAsResponse.write(mapper.writeValueAsString(jwtConfig.getTokenPrefix() + token));
+
+		tokenAsResponse.write(tokens);
 		tokenAsResponse.flush();
 	}
 }
