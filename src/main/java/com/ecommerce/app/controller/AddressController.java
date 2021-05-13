@@ -16,21 +16,21 @@ public class AddressController {
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@PostMapping("/address")
-	public ResponseEntity<Address> createAddress(@RequestBody Address address){
+	public ResponseEntity<Address> createAddress(@RequestBody Address address) {
 		Address savedAddress = addressService.createAddress(address);
 		return new ResponseEntity<Address>(savedAddress, HttpStatus.CREATED);
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping("/address")
-	public ResponseEntity<Iterable<Address>> getAddress(){
+	public ResponseEntity<Iterable<Address>> getAddress() {
 		Iterable<Address> addresses = addressService.getAddress();
 		return new ResponseEntity<>(addresses, HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@DeleteMapping("/address")
-	public void removeAddress(@RequestParam("id") Long id){
+	public void removeAddress(@RequestParam("id") Long id) {
 		addressService.removeAddress(id);
 	}
 }

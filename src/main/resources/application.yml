@@ -1,13 +1,4 @@
 spring:
-  application.jwt:
-    accessSecretKey: "Secure@MSI@Secure@MSI@Secure@MSI@Secure@MSI@Secure@MSI@Secure@MSI@Secure@MSI@"
-    accessTokenPrefix: "Bearer "
-    accessTokenExpirationInHours: 1
-
-    refreshSecretKey: "Secure@AntecSecure@AntecSecure@AntecSecure@AntecSecure@AntecSecure@AntecSecure@Antec"
-    refreshTokenPrefix: "Refresher "
-    refreshTokenExpirationInDays: 2
-
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ecommerce
@@ -15,8 +6,7 @@ spring:
     password: akash
 
   jpa:
-    show-sql: true
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: none
     generate-ddl: true
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
 
@@ -27,3 +17,13 @@ spring:
   server:
     address: 192.168.0.5
     port: 8080
+
+
+application.jwt:
+  accessSecretKey: "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure"
+  accessTokenPrefix: "Bearer "
+  accessTokenExpirationInHours: 1
+
+  refreshSecretKey: "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure"
+  refreshTokenPrefix: "Refresher "
+  refreshTokenExpirationInDays: 2

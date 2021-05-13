@@ -19,32 +19,38 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/v1/ecommerce")
 public class ImageController {
-	
+
 	private final ImageService imageService;
-	
+
 	@GetMapping("/images")
-	public ResponseEntity<Iterable<Image>> getImages(){
+	public ResponseEntity<Iterable<Image>> getImages() {
 		Iterable<Image> images = imageService.getImages();
 		return new ResponseEntity<Iterable<Image>>(images, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/images")
-	public ResponseEntity<Image> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
-		String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+	public ResponseEntity<Image> uploadImage(@RequestParam("image") MultipartFile file)
+	throws IOException {
+		String fileName =
+		StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+
 		Image img = new Image();
-		img .setName(fileName);
+		img.setName(fileName);
 		img.setSize(file.getSize());
 		img.setContent(file.getBytes());
 		img.setUploadedAt(new Date());
+
 		imageService.saveImage(img);
+
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("product_id", img.getId().toString());
+
 		return new ResponseEntity<Image>(img, responseHeaders, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/images")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteImage(@Param("id") Long id){
+	public void deleteImage(@Param("id") Long id) {
 		imageService.deleteImage(id);
 	}
 }

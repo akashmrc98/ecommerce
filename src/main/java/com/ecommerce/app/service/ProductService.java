@@ -9,10 +9,14 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+
     public Iterable<Product> getProducts(){
         return productRepository.findAll();
     }
-    public void saveProduct(Product product){
-        productRepository.save(product);
+
+    public Product getProduct(Long id){
+        return productRepository.findById(id).get();
     }
+
+    public void saveProduct(Product product){productRepository.save(product);}
 }

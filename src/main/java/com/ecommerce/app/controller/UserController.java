@@ -16,15 +16,15 @@ public class UserController {
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	@PostMapping("/users")
-	public void saveUser(@RequestBody User user){
+	public void saveUser(@RequestBody User user) {
 		userService.createUser(user);
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/users")
-	public ResponseEntity<Iterable<User>> getUsers(){
+	public ResponseEntity<Iterable<User>> getUsers() {
 		Iterable<User> users = userService.getUsers();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
-	
+
 }

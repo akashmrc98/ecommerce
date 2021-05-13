@@ -16,24 +16,28 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String vendor;
     @Column(unique = true)
     private String phone;
     @Column(unique = true)
     private String email;
-    private String password;
+    @Column(unique = true)
     private String username;
+
+    private String name;
+    private String password;
+    private String userRole;
+
     private  boolean isAccountNonLocked;
     private  boolean isEnabled;
     private  boolean isCredentialsNonExpired;
     private  boolean isAccountNonExpired;
-    private String userRole;
 
     @OneToMany()
-    private Set<Product> products;
+    private List<Product> products = new ArrayList<>();
     @OneToMany()
-    private Set<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
     @OneToMany()
-    private Set<Address> address;
-
+    private List<Address> address = new ArrayList<>();
+    @OneToOne()
+    private Cart cart;
 }

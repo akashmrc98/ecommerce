@@ -12,23 +12,17 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product {
+public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String description;
-	private String brand;
-	private String category;
-	private String subCategory;
-	private Double price;
-	private Date manufacturedOn;
-	private Date createdAt;
+	private Date createAt;
 	private Date modifiedAt;
-	private String[] specifications;
-	private Integer stock;
+	private Integer quantity;
 
-	@OneToMany()
-	private List<Image> images;
-	@OneToMany()
-	private List<Review> reviews;
+	private String status;
+
+	@OneToMany
+	private List<Product> products;
 }

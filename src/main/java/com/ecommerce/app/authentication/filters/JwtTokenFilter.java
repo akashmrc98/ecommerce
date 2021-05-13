@@ -1,12 +1,14 @@
 package com.ecommerce.app.authentication.filters;
 
 import java.io.IOException;
+import java.util.Collection;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ecommerce.app.jwt.JwtTokenVerifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,22 +24,23 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 	}
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+	protected void doFilterInternal(
+		HttpServletRequest request,
+		HttpServletResponse response,
+		FilterChain chain
+	) throws ServletException, IOException {
 
-		String accessToken = request.getHeader(jwtTokenVerifier.getAuthorizationHeader());
+		String accessToken = jwtTokenVerifier.stripAccessTokenPrefix(request.getHeader(jwtTokenVerifier.getAuthorizationHeader()));
 
 		if(jwtTokenVerifier.isAuthorizedToken(accessToken)){
 			chain.doFilter(request, response);
 			return;
 		}
 
-		Authentication authentication =
-		new UsernamePasswordAuthenticationToken(
-			jwtTokenVerifier.getSubject(accessToken),
-			null,
-			jwtTokenVerifier.getGrantedAuthorities(accessToken)
-		);
+		String username = jwtTokenVerifier.getAccessTokenSubject(accessToken);
+		var auth = jwtTokenVerifier.getAccessTokenGrantedAuthorities(accessToken);
 
+		Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, auth);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		chain.doFilter(request, response);
 	}

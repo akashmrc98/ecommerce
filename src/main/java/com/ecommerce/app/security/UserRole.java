@@ -14,16 +14,16 @@ import java.util.stream.Collectors;
 public enum UserRole {
 	USER
 	(Sets.newHashSet(
-		UserPermission.ADDRESS_WRITE,
-		UserPermission.ADDRESS_READ
+	UserPermission.ADDRESS_WRITE,
+	UserPermission.ADDRESS_READ
 	)),
 
 	ADMIN
 	(Sets.newHashSet(
-		UserPermission.USER_WRITE,
-		UserPermission.USER_READ,
-		UserPermission.ADDRESS_WRITE,
-		UserPermission.ADDRESS_READ
+	UserPermission.USER_WRITE,
+	UserPermission.USER_READ,
+	UserPermission.ADDRESS_WRITE,
+	UserPermission.ADDRESS_READ
 	)),
 
 	GUEST
@@ -31,14 +31,15 @@ public enum UserRole {
 
 	private final Set<UserPermission> userPermissions;
 
-	public Set<GrantedAuthority> getGrantedAuthorities(){
-		Set<GrantedAuthority> permission =
-								getUserPermissions()
-								.stream()
-								.map(userPermission -> new SimpleGrantedAuthority(userPermission.getPermission()))
-								.collect(Collectors.toSet());
+	public Set<GrantedAuthority> getGrantedAuthorities() {
 
-		permission.add(new SimpleGrantedAuthority("ROLE_"+this.name()));
+		Set<GrantedAuthority> permission =
+		getUserPermissions()
+		.stream()
+		.map(userPermission -> new SimpleGrantedAuthority(userPermission.getPermission()))
+		.collect(Collectors.toSet());
+
+		permission.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
 		return permission;
 	}
 
