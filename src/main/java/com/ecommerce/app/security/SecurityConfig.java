@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return provider;
 	}
 
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	protected void configure(AuthenticationManagerBuilder auth)  {
 		auth.authenticationProvider(daoAuthenticationProvider());
 	}
 

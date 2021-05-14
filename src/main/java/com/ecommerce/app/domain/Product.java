@@ -27,8 +27,8 @@ public class Product {
 	private String[] specifications;
 	private Integer stock;
 
-	@OneToMany()
+	@OneToMany
 	private List<Image> images;
-	@OneToMany()
+	@OneToMany
 	private List<Review> reviews;
 }

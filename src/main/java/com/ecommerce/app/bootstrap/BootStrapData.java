@@ -1,13 +1,7 @@
 package com.ecommerce.app.bootstrap;
 
-import com.ecommerce.app.domain.Cart;
-import com.ecommerce.app.domain.Image;
-import com.ecommerce.app.domain.Product;
-import com.ecommerce.app.domain.User;
-import com.ecommerce.app.repository.CartRepository;
-import com.ecommerce.app.repository.ImageRepository;
-import com.ecommerce.app.repository.ProductRepository;
-import com.ecommerce.app.repository.UserRepository;
+import com.ecommerce.app.domain.*;
+import com.ecommerce.app.repository.*;
 import com.ecommerce.app.security.UserRole;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +22,7 @@ public class BootStrapData implements CommandLineRunner {
 	private final CartRepository cartRepository;
 	private final ImageRepository imageRepository;
 	private final ProductRepository productRepository;
+	private final PurchaseRepository purchaseRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -36,13 +31,11 @@ public class BootStrapData implements CommandLineRunner {
 			Cart cart1 = new Cart();
 			Cart cart2 = new Cart();
 			Cart cart3 = new Cart();
-
 			cartRepository.save(cart1);
 			cartRepository.save(cart2);
 			cartRepository.save(cart3);
 
 			User akash = new User();
-
 			akash.setName("akash");
 			akash.setUsername("akash");
 			akash.setEmail("akashmadduru@gmail.com");
@@ -56,7 +49,6 @@ public class BootStrapData implements CommandLineRunner {
 			akash.setCart(cart1);
 
 			User avinash = new User();
-
 			avinash.setName("avinash");
 			avinash.setUsername("avinash");
 			avinash.setEmail("avinash@gmail.com");
@@ -70,7 +62,6 @@ public class BootStrapData implements CommandLineRunner {
 			avinash.setCart(cart2);
 
 			User guest = new User();
-
 			guest.setName("guest");
 			guest.setUsername("guest");
 			guest.setEmail("guest@gmail.com");
@@ -258,7 +249,6 @@ public class BootStrapData implements CommandLineRunner {
 			productRepository.save(product1);
 			productRepository.save(product2);
 			productRepository.save(product3);
-
 		}
 	}
 }

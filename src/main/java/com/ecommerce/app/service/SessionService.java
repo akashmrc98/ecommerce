@@ -3,7 +3,6 @@ package com.ecommerce.app.service;
 import com.ecommerce.app.domain.Session;
 import com.ecommerce.app.jwt.JwtResponse;
 import com.ecommerce.app.jwt.JwtTokenGenerator;
-import com.ecommerce.app.jwt.JwtTokenVerifier;
 import com.ecommerce.app.repository.SessionRepository;
 import com.ecommerce.app.security.UserRole;
 import lombok.AllArgsConstructor;
@@ -17,7 +16,6 @@ public class SessionService {
 
 	private final SessionRepository sessionRepository;
 	private final JwtTokenGenerator jwtTokenGenerator;
-	private final JwtTokenVerifier jwtTokenVerifier;
 
 	public JwtResponse generateNewAccessToken(Session session) {
 
@@ -37,14 +35,13 @@ public class SessionService {
 			sessionRepository.updateSessionToken(session1.getId(), newAccessToken);
 			session1.setAccessToken(newAccessToken);
 
-			JwtResponse response = new JwtResponse(
+			return new JwtResponse(
 			session.getId(),
 			session1.getUser().getUsername(),
 			session.getRefreshToken(),
 			newAccessToken,
 			session1.getUser().getCart().getId()
 			);
-			return response;
 		})
 		.orElseThrow(() -> {
 			throw new NullPointerException("Invalid Token");

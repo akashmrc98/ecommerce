@@ -1,6 +1,5 @@
 package com.ecommerce.app.domain;
 import lombok.*;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,15 +15,4 @@ public class Address {
     private String zip;
     private String city;
     private String state;
-
-    @ManyToOne
-    private User user;
-
-    public Address(String firstLine, String secondLine, String zip, String city, String state) {
-        this.firstLine = firstLine;
-        this.secondLine = secondLine;
-        this.zip = zip;
-        this.city = city;
-        this.state = state;
-    }
 }

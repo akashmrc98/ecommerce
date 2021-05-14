@@ -3,6 +3,7 @@ package com.ecommerce.app.service;
 import com.ecommerce.app.authentication.AuthUser;
 import com.ecommerce.app.authentication.AuthUserDao;
 import com.ecommerce.app.domain.Cart;
+import com.ecommerce.app.domain.Purchase;
 import com.ecommerce.app.domain.User;
 import com.ecommerce.app.repository.CartRepository;
 import com.ecommerce.app.security.UserRole;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.ecommerce.app.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -28,7 +31,6 @@ public class UserService implements AuthUserDao {
 	public void createUser(User user){
 		Cart cart = new Cart();
 		cartRepository.save(cart);
-
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setAccountNonExpired(true);
 		user.setAccountNonLocked(true);
@@ -37,9 +39,13 @@ public class UserService implements AuthUserDao {
 		user.setCart(cart);
 		userRepository.save(user);
 	}
-	
-	public User findByUsername(String username)  {
-		return userRepository.findByUsername(username);
+
+	public void createOrderToUser(String username, Purchase purchase){
+		User user = userRepository.findByUsername(username);
+		List<Purchase> purchases = user.getPurchases();
+		purchases.add(purchase);
+		user.setPurchases(purchases);
+		userRepository.save(user);
 	}
 
 	@Override

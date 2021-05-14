@@ -33,11 +33,11 @@ public class User implements Serializable {
     private  boolean isAccountNonExpired;
 
     @OneToMany()
-    private List<Product> products = new ArrayList<>();
-    @OneToMany()
     private List<Review> reviews = new ArrayList<>();
     @OneToMany()
     private List<Address> address = new ArrayList<>();
+    @OneToMany()
+    private List<Purchase> purchases = new ArrayList<>();
     @OneToOne()
     private Cart cart;
 }
