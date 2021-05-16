@@ -1,0 +1,1 @@
+FROM openjdk:15.0.2

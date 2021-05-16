@@ -1,5 +1,6 @@
 package com.ecommerce.app.jwt;
 
+import com.ecommerce.app.dto.JwtResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
@@ -69,10 +70,17 @@ public class JwtTokenGenerator {
 	String refreshToken,
 	Long id,
 	String username,
-	Long cartId
+	Long cartId,
+	Long wishListId
 	) throws IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		JwtResponse jwtResponse = new JwtResponse(id, username, accessToken, refreshToken, cartId);
+		JwtResponse jwtResponse = new JwtResponse(
+		id,
+		username,
+		accessToken,
+		refreshToken,
+		cartId,
+		wishListId);
 		return objectMapper.writeValueAsString(jwtResponse);
 	}
 }

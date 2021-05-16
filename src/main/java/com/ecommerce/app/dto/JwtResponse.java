@@ -1,4 +1,4 @@
-package com.ecommerce.app.jwt;
+package com.ecommerce.app.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,4 +13,5 @@ public class JwtResponse {
 	private String accessToken;
 	private String refreshToken;
 	private Long cartId;
+	private Long wishListId;
 }

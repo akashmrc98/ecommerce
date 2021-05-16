@@ -32,12 +32,14 @@ public class User implements Serializable {
     private  boolean isCredentialsNonExpired;
     private  boolean isAccountNonExpired;
 
-    @OneToMany()
-    private List<Review> reviews = new ArrayList<>();
-    @OneToMany()
-    private List<Address> address = new ArrayList<>();
-    @OneToMany()
-    private List<Purchase> purchases = new ArrayList<>();
-    @OneToOne()
+    @OneToMany
+    private List<Review> reviews;
+    @OneToMany
+    private List<Address> address;
+    @OneToMany
+    private List<Purchase> purchases;
+    @OneToOne
     private Cart cart;
+    @OneToOne
+    private WishList wishList;
 }

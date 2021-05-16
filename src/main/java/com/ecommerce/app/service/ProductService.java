@@ -1,6 +1,7 @@
 package com.ecommerce.app.service;
 
 import com.ecommerce.app.domain.Product;
+import com.ecommerce.app.dto.PurchaseDto;
 import com.ecommerce.app.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,23 @@ public class ProductService {
 
     public Product getProduct(Long id){
         if(productRepository.findById(id).isPresent())
-            productRepository.findById(id).get();
+            return productRepository.findById(id).get();
         return null;
+    }
+
+    public void updateProductStock(PurchaseDto purchaseDto){
+        Long[] idList = purchaseDto.getProductIdList();
+        int[] itemsList = purchaseDto.getItemsList();
+        for (int i = 0; i < idList.length; i++) {
+            Product product;
+        	if(productRepository.findById(idList[i]).isPresent()){
+                product = productRepository.findById(idList[i]).get();
+                int getCurrentStock = product.getStock();
+                int updatedStock = getCurrentStock - itemsList[i];
+                product.setStock(updatedStock);
+                productRepository.save(product);
+            }
+        }
     }
 
     public void saveProduct(Product product){productRepository.save(product);}

@@ -22,7 +22,7 @@ public class BootStrapData implements CommandLineRunner {
 	private final CartRepository cartRepository;
 	private final ImageRepository imageRepository;
 	private final ProductRepository productRepository;
-	private final PurchaseRepository purchaseRepository;
+	private final WishListRepository wishListRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -31,9 +31,18 @@ public class BootStrapData implements CommandLineRunner {
 			Cart cart1 = new Cart();
 			Cart cart2 = new Cart();
 			Cart cart3 = new Cart();
+
+			WishList wishList1 = new WishList();
+			WishList wishList2 = new WishList();
+			WishList wishList3 = new WishList();
+
 			cartRepository.save(cart1);
 			cartRepository.save(cart2);
 			cartRepository.save(cart3);
+
+			wishListRepository.save(wishList1);
+			wishListRepository.save(wishList2);
+			wishListRepository.save(wishList3);
 
 			User akash = new User();
 			akash.setName("akash");
@@ -47,6 +56,7 @@ public class BootStrapData implements CommandLineRunner {
 			akash.setEnabled(true);
 			akash.setCredentialsNonExpired(true);
 			akash.setCart(cart1);
+			akash.setWishList(wishList1);
 
 			User avinash = new User();
 			avinash.setName("avinash");
@@ -60,6 +70,7 @@ public class BootStrapData implements CommandLineRunner {
 			avinash.setEnabled(true);
 			avinash.setCredentialsNonExpired(true);
 			avinash.setCart(cart2);
+			avinash.setWishList(wishList2);
 
 			User guest = new User();
 			guest.setName("guest");
@@ -73,6 +84,7 @@ public class BootStrapData implements CommandLineRunner {
 			guest.setEnabled(true);
 			guest.setCredentialsNonExpired(true);
 			guest.setCart(cart3);
+			guest.setWishList(wishList3);
 
 			userRepository.save(akash);
 			userRepository.save(avinash);
@@ -149,7 +161,6 @@ public class BootStrapData implements CommandLineRunner {
 			product2.setModifiedAt(new Date());
 			product2.setSpecifications(product2Specs);
 
-
 			Image image_b1 = new Image();
 			File product_b1_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
 			"\\main\\resources\\products\\Product2\\product_b1.jpg");
@@ -183,7 +194,6 @@ public class BootStrapData implements CommandLineRunner {
 			images_b.add(image_b1); images_b.add(image_b2); images_b.add(image_b3);
 			product2.setImages(images_b);
 
-
 			Product product3 = new Product();
 			String[] product3Specs = {
 			"64GB",
@@ -201,7 +211,6 @@ public class BootStrapData implements CommandLineRunner {
 			product3.setCreatedAt(new Date());
 			product3.setModifiedAt(new Date());
 			product3.setSpecifications(product3Specs);
-
 
 			Image image_c1 = new Image();
 			File product_c1_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +

@@ -1,7 +1,7 @@
 package com.ecommerce.app.service;
 
 import com.ecommerce.app.domain.Session;
-import com.ecommerce.app.jwt.JwtResponse;
+import com.ecommerce.app.dto.JwtResponse;
 import com.ecommerce.app.jwt.JwtTokenGenerator;
 import com.ecommerce.app.repository.SessionRepository;
 import com.ecommerce.app.security.UserRole;
@@ -40,7 +40,8 @@ public class SessionService {
 			session1.getUser().getUsername(),
 			session.getRefreshToken(),
 			newAccessToken,
-			session1.getUser().getCart().getId()
+			session1.getUser().getCart().getId(),
+			session1.getUser().getWishList().getId()
 			);
 		})
 		.orElseThrow(() -> {

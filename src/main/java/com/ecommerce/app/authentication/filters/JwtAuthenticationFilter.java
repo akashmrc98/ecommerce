@@ -85,7 +85,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		refreshToken,
 		session.getId(),
 		user.getUsername(),
-		session.getUser().getCart().getId()
+		session.getUser().getCart().getId(),
+		session.getUser().getWishList().getId()
 		);
 
 		response.setContentType("application/json");

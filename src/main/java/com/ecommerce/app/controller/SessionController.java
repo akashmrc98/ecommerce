@@ -1,7 +1,7 @@
 package com.ecommerce.app.controller;
 
 import com.ecommerce.app.domain.Session;
-import com.ecommerce.app.jwt.JwtResponse;
+import com.ecommerce.app.dto.JwtResponse;
 import com.ecommerce.app.service.SessionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
