@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @Configuration
 @NoArgsConstructor
-@ConfigurationProperties(prefix = "application.jwt")
+@ConfigurationProperties(prefix = "jwt")
 public class JwtConfig {
 	private String accessSecretKey;
 	private String accessTokenPrefix;

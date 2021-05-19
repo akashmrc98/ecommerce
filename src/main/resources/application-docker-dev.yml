@@ -1,0 +1,18 @@
+spring:
+  profiles: docker-dev
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://ecom-db/ecommerce?allowPublicKeyRetrieval=true&useSSL=false
+    username: user
+    password: user
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+
+    hibernate:
+      ddl-auto: update
+
+server:
+    port: 8081

@@ -1,22 +1,5 @@
 spring:
-  datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ecommerce?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
-    username: root
-    password: akash
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-
-  server:
-    address: 192.168.0.5
-    port: 8080
-
-application.jwt:
-  accessSecretKey: "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure"
-  accessTokenPrefix: "Bearer "
-  accessTokenExpirationInHours: 1
-  refreshSecretKey: "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure"
-  refreshTokenPrefix: "Refresher "
-  refreshTokenExpirationInDays: 2
+  profiles:
+    include:
+      - jwt
+    active: local-dev

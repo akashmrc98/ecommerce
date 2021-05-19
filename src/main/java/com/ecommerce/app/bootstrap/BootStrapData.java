@@ -4,6 +4,8 @@ import com.ecommerce.app.domain.*;
 import com.ecommerce.app.repository.*;
 import com.ecommerce.app.security.UserRole;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,17 @@ public class BootStrapData implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		Logger logger = LoggerFactory.getLogger(BootStrapData.class);
+
 		if (userRepository.count() == 0) {
+
+			String path = new File("").getAbsolutePath();
+			path = path + "\\src\\main\\resources";
+			path = path.replace("/", "");
+			logger.debug(path);
+			logger.error(path);
+			logger.trace(path);
 
 			Cart cart1 = new Cart();
 			Cart cart2 = new Cart();
@@ -111,8 +123,7 @@ public class BootStrapData implements CommandLineRunner {
 			product1.setSpecifications(product1Specs);
 
 			Image image_a1 = new Image();
-			File product_a1_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product1\\product_a1.jpg");
+			File product_a1_file = new File(path + "\\products\\Product1\\product_a1.jpg");
 			byte[] a1_file_content = Files.readAllBytes(product_a1_file.toPath());
 			image_a1.setId(1L);
 			image_a1.setName(product_a1_file.getName());
@@ -121,8 +132,7 @@ public class BootStrapData implements CommandLineRunner {
 			image_a1.setContent(a1_file_content);
 
 			Image image_a2 = new Image();
-			File product_a2_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product1\\product_a2.jpg");
+			File product_a2_file = new File(path + "\\products\\Product1\\product_a2.jpg");
 			byte[] a2_file_content = Files.readAllBytes(product_a2_file.toPath());
 			image_a2.setId(2L);
 			image_a2.setName(product_a2_file.getName());
@@ -131,8 +141,7 @@ public class BootStrapData implements CommandLineRunner {
 			image_a2.setContent(a2_file_content);
 
 			Image image_a3 = new Image();
-			File product_a3_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product1\\product_a3.jpg");
+			File product_a3_file = new File(path + "\\products\\Product1\\product_a3.jpg");
 			byte[] a3_file_content = Files.readAllBytes(product_a3_file.toPath());
 			image_a3.setId(3L);
 			image_a3.setName(product_a3_file.getName());
@@ -140,7 +149,9 @@ public class BootStrapData implements CommandLineRunner {
 			image_a3.setSize(product_a3_file.length());
 			image_a3.setContent(a3_file_content);
 			ArrayList<Image> images_a = new ArrayList<>();
-			images_a.add(image_a1); images_a.add(image_a2); images_a.add(image_a3);
+			images_a.add(image_a1);
+			images_a.add(image_a2);
+			images_a.add(image_a3);
 			product1.setImages(images_a);
 
 			Product product2 = new Product();
@@ -156,14 +167,14 @@ public class BootStrapData implements CommandLineRunner {
 			product2.setPrice(649.00);
 			product2.setModifiedAt(new Date());
 			product2.setStock(10);
-			product2.setDescription("JBL C100SI by Harman In-Ear Deep Bass Headphones with Mic (Black)");
+			product2.setDescription("JBL C100SI by Harman In-Ear Deep Bass Headphones with Mic " +
+			"(Black)");
 			product2.setCreatedAt(new Date());
 			product2.setModifiedAt(new Date());
 			product2.setSpecifications(product2Specs);
 
 			Image image_b1 = new Image();
-			File product_b1_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product2\\product_b1.jpg");
+			File product_b1_file = new File(path + "\\products\\Product2\\product_b1.jpg");
 			byte[] b1_file_content = Files.readAllBytes(product_b1_file.toPath());
 			image_b1.setId(4L);
 			image_b1.setName(product_b1_file.getName());
@@ -172,8 +183,7 @@ public class BootStrapData implements CommandLineRunner {
 			image_b1.setContent(b1_file_content);
 
 			Image image_b2 = new Image();
-			File product_b2_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product2\\product_b2.jpg");
+			File product_b2_file = new File(path + "\\products\\Product2\\product_b2.jpg");
 			byte[] b2_file_content = Files.readAllBytes(product_b2_file.toPath());
 			image_b2.setId(5L);
 			image_b2.setName(product_b2_file.getName());
@@ -182,8 +192,7 @@ public class BootStrapData implements CommandLineRunner {
 			image_b2.setContent(b2_file_content);
 
 			Image image_b3 = new Image();
-			File product_b3_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product2\\product_b2.jpg");
+			File product_b3_file = new File(path + "\\products\\Product2\\product_b2.jpg");
 			byte[] b3_file_content = Files.readAllBytes(product_b3_file.toPath());
 			image_b3.setId(6L);
 			image_b3.setName(product_b3_file.getName());
@@ -191,7 +200,9 @@ public class BootStrapData implements CommandLineRunner {
 			image_b3.setSize(product_b3_file.length());
 			image_b3.setContent(b3_file_content);
 			ArrayList<Image> images_b = new ArrayList<>();
-			images_b.add(image_b1); images_b.add(image_b2); images_b.add(image_b3);
+			images_b.add(image_b1);
+			images_b.add(image_b2);
+			images_b.add(image_b3);
 			product2.setImages(images_b);
 
 			Product product3 = new Product();
@@ -203,7 +214,7 @@ public class BootStrapData implements CommandLineRunner {
 			product3.setId(3L);
 			product3.setBrand("Sandisk");
 			product3.setCategory("Electronics");
-			product3.setSubCategory("Pendrive");
+			product3.setSubCategory("Pen drive");
 			product3.setPrice(829.00);
 			product3.setModifiedAt(new Date());
 			product3.setStock(10);
@@ -213,8 +224,7 @@ public class BootStrapData implements CommandLineRunner {
 			product3.setSpecifications(product3Specs);
 
 			Image image_c1 = new Image();
-			File product_c1_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product3\\product_c1.jpg");
+			File product_c1_file = new File(path + "\\products\\Product3\\product_c1.jpg");
 			byte[] c1_file_content = Files.readAllBytes(product_c1_file.toPath());
 			image_c1.setId(7L);
 			image_c1.setName(product_c1_file.getName());
@@ -223,8 +233,7 @@ public class BootStrapData implements CommandLineRunner {
 			image_c1.setContent(c1_file_content);
 
 			Image image_c2 = new Image();
-			File product_c2_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product3\\product_c2.jpg");
+			File product_c2_file = new File(path + "\\products\\Product3\\product_c2.jpg");
 			byte[] c2_file_content = Files.readAllBytes(product_c2_file.toPath());
 			image_c2.setId(8L);
 			image_c2.setName(product_c2_file.getName());
@@ -233,8 +242,7 @@ public class BootStrapData implements CommandLineRunner {
 			image_c2.setContent(c2_file_content);
 
 			Image image_c3 = new Image();
-			File product_c3_file = new File("C:\\Users\\akash\\Desktop\\ecommerce\\server\\src" +
-			"\\main\\resources\\products\\Product3\\product_c3.jpg");
+			File product_c3_file = new File(path + "\\products\\Product3\\product_c3.jpg");
 			byte[] c3_file_content = Files.readAllBytes(product_c3_file.toPath());
 			image_c3.setId(9L);
 			image_c3.setName(product_c3_file.getName());
@@ -242,7 +250,9 @@ public class BootStrapData implements CommandLineRunner {
 			image_c3.setSize(product_c3_file.length());
 			image_c3.setContent(c3_file_content);
 			ArrayList<Image> images_c = new ArrayList<>();
-			images_c.add(image_c1); images_c.add(image_c2); images_c.add(image_c3);
+			images_c.add(image_c1);
+			images_c.add(image_c2);
+			images_c.add(image_c3);
 			product3.setImages(images_c);
 
 			imageRepository.save(image_a1);
