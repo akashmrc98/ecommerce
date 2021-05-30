@@ -16,11 +16,11 @@ public class Purchase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Integer items;
-	private Double price;
+	private Integer totalProducts;
+	private Double totalPrice;
 	private Date purchasedAt;
 	private Date lastModifiedAt;
-	private int[] itemsQuantity;
+	private int[] productsQuantityList;
 	private String paymentMethod;
 
 	@OneToOne

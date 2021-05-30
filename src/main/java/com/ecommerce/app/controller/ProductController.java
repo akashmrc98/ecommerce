@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/ecommerce")
+@RequestMapping("/api/v1/ecommerce/products")
 @AllArgsConstructor
 public class ProductController {
 
 	private final ProductService productService;
 
-	@GetMapping("/products")
+	@GetMapping
 	public ResponseEntity<Iterable<Product>> getProducts() {
 		return new ResponseEntity<Iterable<Product>>(productService.getProducts(), HttpStatus.OK);
 	}
 
-	@GetMapping("/products/{productId}")
+	@GetMapping("/{productId}")
 	public ResponseEntity<Product> getProduct(@PathVariable("productId") Long id){
 		return new ResponseEntity<Product>(productService.getProduct(id), HttpStatus.OK);
 	}
 
-	@PostMapping("/products")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveProduct(@RequestBody Product product) {
 		productService.saveProduct(product);

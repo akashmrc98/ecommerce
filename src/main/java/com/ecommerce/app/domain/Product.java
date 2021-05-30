@@ -3,6 +3,7 @@ package com.ecommerce.app.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.checkerframework.checker.index.qual.NonNegative;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,6 +26,8 @@ public class Product {
 	private Date createdAt;
 	private Date modifiedAt;
 	private String[] specifications;
+
+	@NonNegative
 	private Integer stock;
 
 	@OneToMany

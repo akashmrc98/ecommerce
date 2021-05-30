@@ -17,18 +17,18 @@ import java.util.Objects;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/ecommerce")
+@RequestMapping("/api/v1/ecommerce/images")
 public class ImageController {
 
 	private final ImageService imageService;
 
-	@GetMapping("/images")
+	@GetMapping
 	public ResponseEntity<Iterable<Image>> getImages() {
 		Iterable<Image> images = imageService.getImages();
 		return new ResponseEntity<Iterable<Image>>(images, HttpStatus.OK);
 	}
 
-	@PostMapping("/images")
+	@PostMapping
 	public ResponseEntity<Image> uploadImage(@RequestParam("image") MultipartFile file)
 	throws IOException {
 		String fileName =
@@ -48,7 +48,7 @@ public class ImageController {
 		return new ResponseEntity<Image>(img, responseHeaders, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/images")
+	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteImage(@Param("id") Long id) {
 		imageService.deleteImage(id);

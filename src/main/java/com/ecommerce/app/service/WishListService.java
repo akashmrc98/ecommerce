@@ -21,13 +21,13 @@ public class WishListService {
 	private final ProductRepository productRepository;
 	private final WishListRepository wishListRepository;
 
-	public WishList getWishList(Long wishListId){
+	public Iterable<Product> getWishListById(Long wishListId){
 		if(wishListRepository.findById(wishListId).isPresent())
-			return wishListRepository.findById(wishListId).get();
+			return wishListRepository.findById(wishListId).get().getProducts();
 		return null;
 	}
 
-	public void addProductToWishList(Long wishListId, Long productId) {
+	public void addProductToWishListByProductId(Long wishListId, Long productId) {
 		WishList wishList = null;
 		Product product = null;
 		if(wishListRepository.findById(wishListId).isPresent())
@@ -40,7 +40,7 @@ public class WishListService {
 		wishListRepository.save(wishList);
 	}
 
-	public void removeProductFromWishList(Long wishListId, Long productId){
+	public void removeProductFromWishListByProductId(Long wishListId, Long productId){
 		Optional<WishList> wishList = wishListRepository.findById(wishListId);
 		List<Product> wishListProducts = null;
 		if(wishList.isPresent())
@@ -50,7 +50,7 @@ public class WishListService {
 		wishListRepository.save(wishList.get());
 	}
 
-	public void clearWishList(Long wishListId){
+	public void deleteAllProductsInWishListById(Long wishListId){
 		WishList wishList = null;
 		if(wishListRepository.findById(wishListId).isPresent())
 			wishList = wishListRepository.findById(wishListId).get();
@@ -58,13 +58,5 @@ public class WishListService {
 		assert wishList != null;
 		wishList.setProducts(products);
 		wishListRepository.save(wishList);
-	}
-
-	public Integer getWishListLength(Long wishListId){
-		WishList wishList = null;
-		if(wishListRepository.findById(wishListId).isPresent())
-			wishList = wishListRepository.findById(wishListId).get();
-		assert wishList != null;
-		return wishList.getProducts().size();
 	}
 }

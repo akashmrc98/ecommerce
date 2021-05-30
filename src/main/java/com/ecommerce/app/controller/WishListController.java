@@ -1,6 +1,6 @@
 package com.ecommerce.app.controller;
 
-import com.ecommerce.app.domain.WishList;
+import com.ecommerce.app.domain.Product;
 import com.ecommerce.app.dto.WishListProductDto;
 import com.ecommerce.app.service.WishListService;
 import lombok.AllArgsConstructor;
@@ -10,38 +10,34 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/ecommerce")
+@RequestMapping("/api/v1/ecommerce/wishlists")
 public class WishListController {
 
 	private final WishListService wishListService;
 
-	@PostMapping("/wishlist")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void addToWishList(@RequestBody WishListProductDto wishListProductDto) {
-		wishListService
-		.addProductToWishList(
+	public void addProductToWishListById(@RequestBody WishListProductDto wishListProductDto) {
+		wishListService.addProductToWishListByProductId(
 		wishListProductDto.getWishListId(),
 		wishListProductDto.getProductId()
 		);
 	}
 
-	@GetMapping("/wishlist")
-	public ResponseEntity<WishList> getWishList(@RequestParam("wishListId") Long wishListId) {
-		WishList wishList = wishListService.getWishList(wishListId);
-		return new ResponseEntity<WishList>(wishList, HttpStatus.OK);
+	@GetMapping("/{wishListId}")
+	public ResponseEntity<Iterable<Product>> getWishListById(@PathVariable("wishListId") Long wishListId) {
+		Iterable<Product> products = wishListService.getWishListById(wishListId);
+		return new ResponseEntity<Iterable<Product>>(products, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/wishlist")
+	@DeleteMapping
 	@ResponseStatus(HttpStatus.OK)
-	public void removeFromWishList(@RequestParam("wishListId") Long wishListId,
-	                           @RequestParam("productId") Long productId) {
-		wishListService.removeProductFromWishList(wishListId, productId);
-	}
-
-	@GetMapping("/wishlist-length")
-	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Integer> getWishListLength(@RequestParam("wishListId") Long wishListId) {
-		return new ResponseEntity<Integer>(wishListService.getWishListLength(wishListId), HttpStatus.OK);
+	public void removeProductFromWishListById(
+	@RequestParam("wishListId") String wishListId,
+    @RequestParam("productId") String productId)
+	{
+		wishListService
+		.removeProductFromWishListByProductId(Long.parseLong(wishListId), Long.parseLong(productId));
 	}
 }
 

@@ -3,6 +3,7 @@ package com.ecommerce.app.controller;
 import com.ecommerce.app.domain.Address;
 import com.ecommerce.app.domain.Purchase;
 import com.ecommerce.app.domain.User;
+import com.ecommerce.app.service.AddressService;
 import com.ecommerce.app.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,41 +15,43 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/ecommerce")
+@RequestMapping("/api/v1/ecommerce/users")
 public class UserController {
 	private final UserService userService;
+	private final AddressService addressService;
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	@PostMapping("/users")
+	@PostMapping
 	public void saveUser(@RequestBody User user) {
 		userService.createUser(user);
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@GetMapping("/users")
+	@GetMapping
 	public ResponseEntity<Iterable<User>> getUsers() {
 		Iterable<User> users = userService.getUsers();
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
-	@GetMapping("/purchases/{username}")
-	public ResponseEntity<Iterable<Purchase>> getPurchases(@PathVariable("username") String username) {
-		Iterable<Purchase> purchases = userService.getPurchases(username);
+	@GetMapping("/{username}/purchases")
+	public ResponseEntity<Iterable<Purchase>> getPurchasesByUserID(@PathVariable("username") String username) {
+		Iterable<Purchase> purchases = userService.getPurchasesByUserID(username);
 		return new ResponseEntity<Iterable<Purchase>>(purchases, HttpStatus.OK);
 	}
 
-	@GetMapping("/address/{username}")
-	public ResponseEntity<Iterable<Address>> getAddresses(@PathVariable("username") String username) {
-		Iterable<Address> addresses = userService.getAddresses(username);
+	@GetMapping("/{username}/address")
+	public ResponseEntity<Iterable<Address>> getAddressesByUserID(@PathVariable("username") String username) {
+		Iterable<Address> addresses = userService.getAddressesByUserID(username);
 		return new ResponseEntity<Iterable<Address>>(addresses, HttpStatus.OK);
 	}
 
-	@PostMapping("/address/{username}")
+	@PostMapping("/{username}/address")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveAddress(
 	@PathVariable("username") String username,
-	@RequestBody List<Address> address) {
-		userService.saveAddresses(username, address);
+	@RequestBody Address address) {
+		addressService.createAddress(address);
+		userService.saveAddressesByUsername(username, address);
 	}
 
 }

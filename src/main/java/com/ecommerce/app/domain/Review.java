@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -15,8 +15,9 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String review;
+    private String headLine;
+    private String description;
     private int rating;
-    private LocalDateTime postedOn;
+    private Date reviewedOn;
+    private String username;
 }

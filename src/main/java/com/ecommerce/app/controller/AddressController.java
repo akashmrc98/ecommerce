@@ -10,27 +10,37 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/ecommerce")
+@RequestMapping("/api/v1/ecommerce/address")
 public class AddressController {
 	private final AddressService addressService;
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	@PostMapping("/address")
+	@PostMapping
 	public ResponseEntity<Address> createAddress(@RequestBody Address address) {
 		Address savedAddress = addressService.createAddress(address);
 		return new ResponseEntity<Address>(savedAddress, HttpStatus.CREATED);
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	@GetMapping("/address")
+	@GetMapping
 	public ResponseEntity<Iterable<Address>> getAddress() {
 		Iterable<Address> addresses = addressService.getAddress();
 		return new ResponseEntity<>(addresses, HttpStatus.OK);
 	}
 
+	@PutMapping("/{addressId}")
+	public ResponseEntity<Address> getAddress(
+	@PathVariable("addressId") Long id,
+	@RequestBody Address address
+	) {
+		Address updatedAddress = addressService.updateAddress(id, address);
+		return new ResponseEntity<Address>(updatedAddress, HttpStatus.OK);
+	}
+
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	@DeleteMapping("/address")
-	public void removeAddress(@RequestParam("id") Long id) {
+	@DeleteMapping("/{addressId}")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeAddress(@PathVariable("addressId") Long id) {
 		addressService.removeAddress(id);
 	}
 }

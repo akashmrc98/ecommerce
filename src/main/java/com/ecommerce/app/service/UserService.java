@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -42,7 +43,23 @@ public class UserService implements AuthUserDao {
 		userRepository.save(user);
 	}
 
-	public void createOrderToUser(String username, Purchase purchase) {
+	public void updateUserByUserID(User user) {
+		Optional<User> fetchedUser = userRepository.findById(user.getId());
+		fetchedUser.ifPresent((userData -> {
+			userData.setName(user.getName());
+			userRepository.save(userData);
+		}));
+	}
+
+	public void saveAddressesByUsername(String username, Address address) {
+		User user = userRepository.findByUsername(username);
+		List<Address> currentAddress = user.getAddress();
+		currentAddress.add(address);
+		user.setAddress(currentAddress);
+		userRepository.save(user);
+	}
+
+	public void savePurchaseByUsername(String username, Purchase purchase) {
 		User user = userRepository.findByUsername(username);
 		List<Purchase> purchases = user.getPurchases();
 		purchases.add(purchase);
@@ -50,19 +67,11 @@ public class UserService implements AuthUserDao {
 		userRepository.save(user);
 	}
 
-	public Iterable<Address> getAddresses(String username) {
+	public Iterable<Address> getAddressesByUserID(String username) {
 		return userRepository.findByUsername(username).getAddress();
 	}
 
-	public void saveAddresses(String username, List<Address> addresses) {
-		User user = userRepository.findByUsername(username);
-		List<Address> currentAddress = user.getAddress();
-		currentAddress.addAll(addresses);
-		user.setAddress(currentAddress);
-		userRepository.save(user);
-	}
-
-	public Iterable<Purchase> getPurchases(String username) {
+	public Iterable<Purchase> getPurchasesByUserID(String username) {
 		return userRepository.findByUsername(username).getPurchases();
 	}
 

@@ -10,9 +10,9 @@ public class PurchaseDto {
 	private Long cartId;
 	private String username;
 	private double totalPrice;
-	private int totalItems;
-	private int[] itemsList;
-	private Long[] productIdList;
+	private int totalProducts;
+	private int[] productsQuantityList;
+	private Long[] productsIdList;
 	private List<Product> products;
 	private String paymentMethod;
 	private Address address;

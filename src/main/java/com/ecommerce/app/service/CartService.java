@@ -7,7 +7,6 @@ import com.ecommerce.app.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,13 +18,13 @@ public class CartService {
 	private final CartRepository cartRepository;
 	private final ProductRepository productRepository;
 
-	public Cart getCart(Long cartId){
+	public Iterable<Product> getCartProductsByID(Long cartId){
 		if(cartRepository.findById(cartId).isPresent())
-			return cartRepository.findById(cartId).get();
+			return cartRepository.findById(cartId).get().getProducts();
 		return null;
 	}
 
-	public void addProductToCart(Long cartId, Long productId) {
+	public void addProductToCartByProductID(Long cartId, Long productId) {
 		Cart cart = null;
 		Product product = null;
 		if(cartRepository.findById(cartId).isPresent())
@@ -38,7 +37,7 @@ public class CartService {
 		cartRepository.save(cart);
 	}
 
-	public void removeProductFromCart(Long cartId, Long productId){
+	public void removeProductFromCartByProductID(Long cartId, Long productId){
 		Optional<Cart> cart = cartRepository.findById(cartId);
 		List<Product> cartProducts = null;
 		if(cart.isPresent())
@@ -48,7 +47,7 @@ public class CartService {
 		cartRepository.save(cart.get());
 	}
 
-	public void clearCart(Long cartId){
+	public void deleteAllProductsInCartByID(Long cartId){
 		Cart cart = null;
 		if(cartRepository.findById(cartId).isPresent())
 			cart = cartRepository.findById(cartId).get();
@@ -56,13 +55,5 @@ public class CartService {
 		assert cart != null;
 		cart.setProducts(products);
 		cartRepository.save(cart);
-	}
-
-	public Integer getCartLength(Long cartId){
-		Cart cart = null;
-		if(cartRepository.findById(cartId).isPresent())
-			cart = cartRepository.findById(cartId).get();
-		assert cart != null;
-		return cart.getProducts().size();
 	}
 }

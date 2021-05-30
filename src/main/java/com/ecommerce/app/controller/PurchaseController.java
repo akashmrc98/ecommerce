@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/ecommerce")
+@RequestMapping("/api/v1/ecommerce/purchases")
 public class PurchaseController {
 
 	private final PurchaseService purchaseService;
@@ -21,12 +21,12 @@ public class PurchaseController {
 	private final UserService userService;
 	private final ProductService productService;
 
-	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/purchases")
-	public void checkOutCart(@RequestBody PurchaseDto purchaseDto){
+	@PostMapping
+	public ResponseEntity<Purchase> checkOutCart(@RequestBody PurchaseDto purchaseDto){
 		Purchase purchase = purchaseService.checkOutOrder(purchaseDto);
 		productService.updateProductStock(purchaseDto);
-		cartService.clearCart(purchaseDto.getCartId());
-		userService.createOrderToUser(purchaseDto.getUsername(), purchase);
+		cartService.deleteAllProductsInCartByID(purchaseDto.getCartId());
+		userService.savePurchaseByUsername(purchaseDto.getUsername(), purchase);
+		return new ResponseEntity<Purchase>(purchase, HttpStatus.CREATED);
 	}
 }

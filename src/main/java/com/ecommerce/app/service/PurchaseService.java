@@ -16,21 +16,16 @@ public class PurchaseService {
 	private final PurchaseRepository purchaseRepository;
 
 	public Purchase checkOutOrder(PurchaseDto purchaseDto){
-		List<Product> products = purchaseDto.getProducts();
 		Purchase purchase = new Purchase();
-		purchase.setItems(purchaseDto.getTotalItems());
-		purchase.setPrice(purchaseDto.getTotalPrice());
+		purchase.setTotalProducts(purchaseDto.getTotalProducts());
+		purchase.setTotalPrice(purchaseDto.getTotalPrice());
 		purchase.setLastModifiedAt(new Date());
 		purchase.setPurchasedAt(new Date());
-		purchase.setProducts(products);
-		purchase.setItemsQuantity(purchaseDto.getItemsList());
+		purchase.setProducts(purchaseDto.getProducts());
+		purchase.setProductsQuantityList(purchaseDto.getProductsQuantityList());
 		purchase.setAddress(purchaseDto.getAddress());
 		purchase.setPaymentMethod(purchaseDto.getPaymentMethod());
 		purchaseRepository.save(purchase);
 		return purchase;
-	}
-
-	public Iterable<Purchase> getPurchases(){
-		return purchaseRepository.findAll();
 	}
 }
