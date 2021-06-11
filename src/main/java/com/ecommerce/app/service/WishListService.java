@@ -3,6 +3,8 @@ package com.ecommerce.app.service;
 import com.ecommerce.app.domain.Cart;
 import com.ecommerce.app.domain.Product;
 import com.ecommerce.app.domain.WishList;
+import com.ecommerce.app.dto.ProductsDto;
+import com.ecommerce.app.mapper.products.ProductsMapper;
 import com.ecommerce.app.repository.CartRepository;
 import com.ecommerce.app.repository.ProductRepository;
 import com.ecommerce.app.repository.WishListRepository;
@@ -20,10 +22,11 @@ public class WishListService {
 	private final CartRepository cartRepository;
 	private final ProductRepository productRepository;
 	private final WishListRepository wishListRepository;
+	private final ProductsMapper productsMapperImpl;
 
-	public Iterable<Product> getWishListById(Long wishListId){
+	public Iterable<ProductsDto> getWishListById(Long wishListId){
 		if(wishListRepository.findById(wishListId).isPresent())
-			return wishListRepository.findById(wishListId).get().getProducts();
+			return productsMapperImpl.productsToProductsDTO(wishListRepository.findById(wishListId).get().getProducts());
 		return null;
 	}
 

@@ -1,7 +1,7 @@
 package com.ecommerce.app.service;
 
 import com.ecommerce.app.domain.Session;
-import com.ecommerce.app.dto.JwtResponse;
+import com.ecommerce.app.model.response.JwtResponse;
 import com.ecommerce.app.jwt.JwtTokenGenerator;
 import com.ecommerce.app.repository.SessionRepository;
 import com.ecommerce.app.security.UserRole;

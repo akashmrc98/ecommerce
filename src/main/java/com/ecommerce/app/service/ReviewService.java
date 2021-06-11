@@ -3,8 +3,8 @@ package com.ecommerce.app.service;
 import com.ecommerce.app.domain.Product;
 import com.ecommerce.app.domain.Review;
 import com.ecommerce.app.domain.User;
-import com.ecommerce.app.dto.LikeDto;
-import com.ecommerce.app.dto.ReviewDto;
+import com.ecommerce.app.model.request.LikeDto;
+import com.ecommerce.app.model.request.ReviewDto;
 import com.ecommerce.app.repository.ProductRepository;
 import com.ecommerce.app.repository.ReviewsRepository;
 import com.ecommerce.app.repository.UserRepository;
@@ -23,6 +23,7 @@ public class ReviewService {
 	private final ReviewsRepository reviewsRepository;
 
 	public void saveReview(ReviewDto review){
+
 		Review newReview = new Review();
 		newReview.setUsername(review.getUsername());
 		newReview.setHeadLine(review.getHeadLine());
@@ -42,12 +43,21 @@ public class ReviewService {
 		productRepository.save(product);
 	}
 
-	public void likeReview(LikeDto username, Long reviewId){
+	public int getReviewLikes(Long reviewId){
+		return reviewsRepository.findById(reviewId).get().getFavourites();
+	}
+
+	public void likeReview(LikeDto username, Long reviewId) throws Exception {
 		Review review = reviewsRepository.findById(reviewId).get();
-		List<String> likes = review.getLikes();
-		likes.add(username.getUsername());
-		review.setLikes(likes);
-		reviewsRepository.save(review);
+		boolean isLiked = review.getUsername().equals(review.getUsername());
+		if(!isLiked){
+			int updatedLikes = review.getFavourites() + 1;
+			review.setFavourites(updatedLikes);
+			reviewsRepository.save(review);
+		}
+		if(isLiked){
+			throw new Exception("User already liked review");
+		}
 	}
 
 }

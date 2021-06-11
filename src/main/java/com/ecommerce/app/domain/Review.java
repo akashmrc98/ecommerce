@@ -20,4 +20,5 @@ public class Review {
     private int rating;
     private Date reviewedOn;
     private String username;
+    private int favourites;
 }

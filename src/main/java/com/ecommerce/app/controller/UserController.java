@@ -3,6 +3,7 @@ package com.ecommerce.app.controller;
 import com.ecommerce.app.domain.Address;
 import com.ecommerce.app.domain.Purchase;
 import com.ecommerce.app.domain.User;
+import com.ecommerce.app.dto.PurchasesDto;
 import com.ecommerce.app.service.AddressService;
 import com.ecommerce.app.service.UserService;
 import lombok.AllArgsConstructor;
@@ -34,9 +35,9 @@ public class UserController {
 	}
 
 	@GetMapping("/{username}/purchases")
-	public ResponseEntity<Iterable<Purchase>> getPurchasesByUserID(@PathVariable("username") String username) {
-		Iterable<Purchase> purchases = userService.getPurchasesByUserID(username);
-		return new ResponseEntity<Iterable<Purchase>>(purchases, HttpStatus.OK);
+	public ResponseEntity<Iterable<PurchasesDto>> getPurchasesByUserID(@PathVariable("username") String username) {
+		Iterable<PurchasesDto> purchases = userService.getPurchasesByUserID(username);
+		return new ResponseEntity<Iterable<PurchasesDto>>(purchases, HttpStatus.OK);
 	}
 
 	@GetMapping("/{username}/address")

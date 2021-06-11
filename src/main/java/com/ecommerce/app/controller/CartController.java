@@ -1,7 +1,8 @@
 package com.ecommerce.app.controller;
 
 import com.ecommerce.app.domain.Product;
-import com.ecommerce.app.dto.CartProductDto;
+import com.ecommerce.app.dto.ProductsDto;
+import com.ecommerce.app.model.request.CartProductDto;
 import com.ecommerce.app.service.CartService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,9 @@ public class CartController {
 	}
 
 	@GetMapping("/{cartId}")
-	public ResponseEntity<Iterable<Product>> getCartByID(@PathVariable("cartId") Long cartId) {
-		Iterable<Product> products = cartService.getCartProductsByID(cartId);
-		return new ResponseEntity<Iterable<Product>>(products, HttpStatus.OK);
+	public ResponseEntity<Iterable<ProductsDto>> getCartByID(@PathVariable("cartId") Long cartId) {
+		Iterable<ProductsDto> products = cartService.getCartProductsByID(cartId);
+		return new ResponseEntity<Iterable<ProductsDto>>(products, HttpStatus.OK);
 	}
 
 	@DeleteMapping

@@ -33,7 +33,7 @@ public class User implements Serializable {
     private  boolean isCredentialsNonExpired;
     private  boolean isAccountNonExpired;
 
-    @OneToMany
+    @ManyToMany
     private List<Review> reviews;
     @OneToMany
     private List<Address> address;

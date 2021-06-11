@@ -1,6 +1,6 @@
 package com.ecommerce.app.jwt;
 
-import com.ecommerce.app.dto.JwtResponse;
+import com.ecommerce.app.model.response.JwtResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;

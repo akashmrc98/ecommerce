@@ -2,6 +2,8 @@ package com.ecommerce.app.service;
 
 import com.ecommerce.app.domain.Cart;
 import com.ecommerce.app.domain.Product;
+import com.ecommerce.app.dto.ProductsDto;
+import com.ecommerce.app.mapper.products.ProductsMapper;
 import com.ecommerce.app.repository.CartRepository;
 import com.ecommerce.app.repository.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -17,10 +19,11 @@ public class CartService {
 
 	private final CartRepository cartRepository;
 	private final ProductRepository productRepository;
+	private final ProductsMapper productsMapperImpl;
 
-	public Iterable<Product> getCartProductsByID(Long cartId){
+	public Iterable<ProductsDto> getCartProductsByID(Long cartId){
 		if(cartRepository.findById(cartId).isPresent())
-			return cartRepository.findById(cartId).get().getProducts();
+			return productsMapperImpl.productsToProductsDTO(cartRepository.findById(cartId).get().getProducts());
 		return null;
 	}
 

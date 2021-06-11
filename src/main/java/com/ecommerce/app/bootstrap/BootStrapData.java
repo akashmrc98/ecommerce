@@ -211,7 +211,7 @@ public class BootStrapData implements CommandLineRunner {
 			"Free up space on your OTG-enabled Android phone",
 			"Retractable design with dual micro-USB and USB 3.0 connectors"
 			};
-			product3.setId(3L);
+			product3.setId(4L);
 			product3.setBrand("Sandisk");
 			product3.setCategory("Electronics");
 			product3.setSubCategory("Pen drive");
@@ -255,6 +255,159 @@ public class BootStrapData implements CommandLineRunner {
 			images_c.add(image_c3);
 			product3.setImages(images_c);
 
+			Product product4 = new Product();
+			String[] product4Specs = {
+			"48MP rear camera | 8MP tele + 16MP camera",
+			"4000mAH lithium-ion battery",
+			"8GB RAM | 256GB internal memory"
+			};
+			product4.setId(4L);
+			product4.setBrand("OnePlus");
+			product4.setCategory("Electronics");
+			product4.setSubCategory("Mobile");
+			product4.setPrice(59999.00);
+			product4.setModifiedAt(new Date());
+			product4.setStock(12);
+			product4.setDescription("OnePlus 7 Pro, 8GB RAM, Super AMOLED Display," +
+			"256GB Storage, 4000mAH");
+			product4.setCreatedAt(new Date());
+			product4.setModifiedAt(new Date());
+			product4.setSpecifications(product4Specs);
+
+			Image image_d1 = new Image();
+			File product_d1_file = new File(path + "\\products\\Product4\\product_d1.jpg");
+			byte[] d1_file_content = Files.readAllBytes(product_d1_file.toPath());
+			image_d1.setId(10L);
+			image_d1.setName(product_d1_file.getName());
+			image_d1.setUploadedAt(new Date());
+			image_d1.setSize(product_d1_file.length());
+			image_d1.setContent(d1_file_content);
+
+			Image image_d2 = new Image();
+			File product_d2_file = new File(path + "\\products\\Product4\\product_d2.jpg");
+			byte[] d2_file_content = Files.readAllBytes(product_d2_file.toPath());
+			image_d2.setId(11L);
+			image_d2.setName(product_d2_file.getName());
+			image_d2.setUploadedAt(new Date());
+			image_d2.setSize(product_d2_file.length());
+			image_d2.setContent(d2_file_content);
+
+			Image image_d3 = new Image();
+			File product_d3_file = new File(path + "\\products\\Product4\\product_d3.jpg");
+			byte[] d3_file_content = Files.readAllBytes(product_d3_file.toPath());
+			image_d3.setId(12L);
+			image_d3.setName(product_d3_file.getName());
+			image_d3.setUploadedAt(new Date());
+			image_d3.setSize(product_d3_file.length());
+			image_d3.setContent(d3_file_content);
+			ArrayList<Image> images_d = new ArrayList<>();
+			images_d.add(image_d1);
+			images_d.add(image_d2);
+			images_d.add(image_d3);
+			product4.setImages(images_d);
+
+
+			Product product5 = new Product();
+			String[] product5Specs = {
+			"Intel Core i7 9700 Desktop 9th Gen 8 Cores",
+			"8 Cores /8 Threads",
+			"Intel UHD Graphics 630"
+			};
+			product5.setId(5L);
+			product5.setBrand("Intel");
+			product5.setCategory("Electronics");
+			product5.setSubCategory("Processor");
+			product5.setPrice(29999.00);
+			product5.setModifiedAt(new Date());
+			product5.setStock(12);
+			product5.setDescription("Intel Core i7 9700 Desktop 9th Gen Processor 8 Cores");
+			product5.setCreatedAt(new Date());
+			product5.setModifiedAt(new Date());
+			product5.setSpecifications(product5Specs);
+
+			Image image_e1 = new Image();
+			File product_e1_file = new File(path + "\\products\\Product5\\product_e1.jpg");
+			byte[] e1_file_content = Files.readAllBytes(product_e1_file.toPath());
+			image_e1.setId(13L);
+			image_e1.setName(product_e1_file.getName());
+			image_e1.setUploadedAt(new Date());
+			image_e1.setSize(product_e1_file.length());
+			image_e1.setContent(e1_file_content);
+
+			Image image_e2 = new Image();
+			File product_e2_file = new File(path + "\\products\\Product5\\product_e2.jpg");
+			byte[] e2_file_content = Files.readAllBytes(product_e2_file.toPath());
+			image_e2.setId(14L);
+			image_e2.setName(product_e2_file.getName());
+			image_e2.setUploadedAt(new Date());
+			image_e2.setSize(product_e2_file.length());
+			image_e2.setContent(e2_file_content);
+
+			Image image_e3 = new Image();
+			File product_e3_file = new File(path + "\\products\\Product5\\product_e3.jpg");
+			byte[] e3_file_content = Files.readAllBytes(product_e3_file.toPath());
+			image_e3.setId(15L);
+			image_e3.setName(product_e3_file.getName());
+			image_e3.setUploadedAt(new Date());
+			image_e3.setSize(product_e3_file.length());
+			image_e3.setContent(e3_file_content);
+			ArrayList<Image> images_e = new ArrayList<>();
+			images_e.add(image_e1);
+			images_e.add(image_e2);
+			images_e.add(image_e3);
+			product5.setImages(images_e);
+
+			Product product6 = new Product();
+			String[] product6Specs = {
+			"2.60GHz Intel Core i7-9750H 9th Gen processor",
+			"1TB 7200rpm HDD+ 256 GB SSD | 8GB DDR4 RAM",
+			"15.6-inch screen, NVIDIA GTX 1650 4GB Graphics"
+			};
+			product6.setId(6L);
+			product6.setBrand("HP");
+			product6.setCategory("Electronics");
+			product6.setSubCategory("Laptop");
+			product6.setPrice(129999.00);
+			product6.setModifiedAt(new Date());
+			product6.setStock(12);
+			product6.setDescription("HP Pavilion Gaming 9th Gen Intel Core i7 Processor 15.6-inch " +
+			"FHD Gaming Laptop (i7-9750H/8GB/256GB SSD + 1TB HDD/Windows 10/4GB NVIDIA GTX 1650");
+			product6.setCreatedAt(new Date());
+			product6.setModifiedAt(new Date());
+			product6.setSpecifications(product6Specs);
+
+			Image image_f1 = new Image();
+			File product_f1_file = new File(path + "\\products\\Product6\\product_f1.jpg");
+			byte[] f1_file_content = Files.readAllBytes(product_f1_file.toPath());
+			image_f1.setId(16L);
+			image_f1.setName(product_f1_file.getName());
+			image_f1.setUploadedAt(new Date());
+			image_f1.setSize(product_f1_file.length());
+			image_f1.setContent(f1_file_content);
+
+			Image image_f2 = new Image();
+			File product_f2_file = new File(path + "\\products\\Product6\\product_f2.jpg");
+			byte[] f2_file_content = Files.readAllBytes(product_f2_file.toPath());
+			image_f2.setId(17L);
+			image_f2.setName(product_f2_file.getName());
+			image_f2.setUploadedAt(new Date());
+			image_f2.setSize(product_f2_file.length());
+			image_f2.setContent(f2_file_content);
+
+			Image image_f3 = new Image();
+			File product_f3_file = new File(path + "\\products\\Product6\\product_f3.jpg");
+			byte[] f3_file_content = Files.readAllBytes(product_f3_file.toPath());
+			image_f3.setId(18L);
+			image_f3.setName(product_f3_file.getName());
+			image_f3.setUploadedAt(new Date());
+			image_f3.setSize(product_f3_file.length());
+			image_f3.setContent(f3_file_content);
+			ArrayList<Image> images_f = new ArrayList<>();
+			images_f.add(image_f1);
+			images_f.add(image_f2);
+			images_f.add(image_f3);
+			product6.setImages(images_f);
+
 			imageRepository.save(image_a1);
 			imageRepository.save(image_a2);
 			imageRepository.save(image_a3);
@@ -264,10 +417,22 @@ public class BootStrapData implements CommandLineRunner {
 			imageRepository.save(image_c1);
 			imageRepository.save(image_c2);
 			imageRepository.save(image_c3);
+			imageRepository.save(image_d1);
+			imageRepository.save(image_d2);
+			imageRepository.save(image_d3);
+			imageRepository.save(image_e1);
+			imageRepository.save(image_e2);
+			imageRepository.save(image_e3);
+			imageRepository.save(image_f1);
+			imageRepository.save(image_f2);
+			imageRepository.save(image_f3);
 
 			productRepository.save(product1);
 			productRepository.save(product2);
 			productRepository.save(product3);
+			productRepository.save(product4);
+			productRepository.save(product5);
+			productRepository.save(product6);
 		}
 	}
 }

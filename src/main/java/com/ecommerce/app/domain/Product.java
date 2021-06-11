@@ -32,6 +32,6 @@ public class Product {
 
 	@OneToMany
 	private List<Image> images;
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Review> reviews;
 }

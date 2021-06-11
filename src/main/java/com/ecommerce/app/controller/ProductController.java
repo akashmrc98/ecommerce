@@ -1,6 +1,8 @@
 package com.ecommerce.app.controller;
 
 import com.ecommerce.app.domain.Product;
+import com.ecommerce.app.dto.ProductReviewDto;
+import com.ecommerce.app.dto.ProductsDto;
 import com.ecommerce.app.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,13 +18,23 @@ public class ProductController {
 	private final ProductService productService;
 
 	@GetMapping
-	public ResponseEntity<Iterable<Product>> getProducts() {
-		return new ResponseEntity<Iterable<Product>>(productService.getProducts(), HttpStatus.OK);
+	public ResponseEntity<Iterable<ProductsDto>> getProducts(
+	@RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,
+	@RequestParam(defaultValue = "4", value = "pageSize") Integer pageSize,
+	@RequestParam(defaultValue = "id", value = "sortBy") String sortBy) {
+		return new ResponseEntity<Iterable<ProductsDto>>(productService.getProducts(pageNo,
+		pageSize, sortBy),
+		HttpStatus.OK);
+	}
+
+	@GetMapping("/size")
+	public ResponseEntity<Long> getProductsCount() {
+		return new ResponseEntity<Long>(productService.getProductsCount(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{productId}")
-	public ResponseEntity<Product> getProduct(@PathVariable("productId") Long id){
-		return new ResponseEntity<Product>(productService.getProduct(id), HttpStatus.OK);
+	public ResponseEntity<ProductReviewDto> getProduct(@PathVariable("productId") Long id){
+		return new ResponseEntity<ProductReviewDto>(productService.getProduct(id), HttpStatus.OK);
 	}
 
 	@PostMapping

@@ -1,7 +1,8 @@
 package com.ecommerce.app.controller;
 
 import com.ecommerce.app.domain.Product;
-import com.ecommerce.app.dto.WishListProductDto;
+import com.ecommerce.app.dto.ProductsDto;
+import com.ecommerce.app.model.request.WishListProductDto;
 import com.ecommerce.app.service.WishListService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,9 @@ public class WishListController {
 	}
 
 	@GetMapping("/{wishListId}")
-	public ResponseEntity<Iterable<Product>> getWishListById(@PathVariable("wishListId") Long wishListId) {
-		Iterable<Product> products = wishListService.getWishListById(wishListId);
-		return new ResponseEntity<Iterable<Product>>(products, HttpStatus.OK);
+	public ResponseEntity<Iterable<ProductsDto>> getWishListById(@PathVariable("wishListId") Long wishListId) {
+		Iterable<ProductsDto> products = wishListService.getWishListById(wishListId);
+		return new ResponseEntity<Iterable<ProductsDto>>(products, HttpStatus.OK);
 	}
 
 	@DeleteMapping

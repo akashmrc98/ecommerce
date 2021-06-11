@@ -1,7 +1,7 @@
 package com.ecommerce.app.controller;
 
 import com.ecommerce.app.domain.Purchase;
-import com.ecommerce.app.dto.PurchaseDto;
+import com.ecommerce.app.model.request.PurchaseDto;
 import com.ecommerce.app.service.CartService;
 import com.ecommerce.app.service.ProductService;
 import com.ecommerce.app.service.PurchaseService;
